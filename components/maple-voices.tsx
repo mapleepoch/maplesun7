@@ -29,11 +29,12 @@ export const MapleVoices: React.FC<MapleVoicesProps> = ({ articles }) => {
         <div className="text-center">
           <Mic className="w-12 h-12 text-red-600 mx-auto mb-3" />
           <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-            Stories from Canadians
+            Authentic stories and perspectives
           </h3>
           <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Authentic voices sharing Canadian experiences across travel, food, culture, history, 
-            achievements, and arts. Real stories from real Canadians.
+            
+ from Canada and beyond — exploring culture, achievements, arts, and the experiences that shape lives. Real voices, real stories.
+
           </p>
         </div>
       </div>
