@@ -229,8 +229,7 @@ export const WorldNews: React.FC<WorldNewsProps> = ({
             Global News from Every Continent
           </h3>
           <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Stay informed with breaking news and important developments from Africa, Americas, 
-            Australia, Asia, Europe, and the United Kingdom.
+            Stay informed with breaking news and important developments from Africa, Americas, Australia, Asia, Canada, Europe, and the United Kingdom.
           </p>
         </div>
       </div>
