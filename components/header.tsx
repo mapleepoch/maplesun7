@@ -121,7 +121,7 @@ export function Header() {
       </div>
 
       {/* Main Navigation */}
-      <nav className="container mx-auto px-4 py-4">
+      <nav className="container mx-auto px-4 py-1">
         <div className="flex items-center justify-between">
           {/* Logo */}
          
