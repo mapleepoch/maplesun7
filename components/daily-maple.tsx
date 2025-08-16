@@ -29,11 +29,11 @@ export function DailyMaple({ articles }: DailyMapleProps) {
         <div className="text-center">
           <Leaf className="w-12 h-12 text-red-600 mx-auto mb-3" />
           <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-            Your Daily Canadian News Brew
+            Your daily dose of news and insights.
           </h3>
           <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Start your day with the most important Canadian stories, from coast to coast to coast. 
-            Fresh insights and updates from across the Great White North.
+            From Canada’s coasts to global headlines, start your day with the stories shaping our world.
+
           </p>
         </div>
       </div>
