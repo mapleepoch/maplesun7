@@ -29,10 +29,11 @@ export const BookNook: React.FC<BookNookProps> = ({ articles }) => {
         <div className="text-center">
           <BookOpen className="w-12 h-12 text-red-600 mx-auto mb-3" />
           <h3 className="text-xl font-bold text-gray-900 dark:text-white mb-2">
-            Literary Reviews & Book Recommendations
+             Discover the tales
           </h3>
           <p className="text-gray-600 dark:text-gray-300">
-            Discover captivating stories, insightful reviews, and your next great read
+            and pages that move you — Canada and beyond
+
           </p>
         </div>
       </div>
