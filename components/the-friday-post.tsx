@@ -32,7 +32,8 @@ export const TheFridayPost: React.FC<TheFridayPostProps> = ({ articles }) => {
             Weekly Podcast Highlights
           </h3>
           <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Authentic conversations, expert interviews, and compelling narratives that showcase the Global experience.
+           Not just news. Not just talk. Every Friday, The Friday Post podcast delivers real voices, raw stories, and perspectives that cross borders.
+
           </p>
         </div>
       </div>
