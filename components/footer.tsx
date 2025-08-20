@@ -23,10 +23,10 @@ export function Footer() {
               <Link href="https://x.com/mapleepoch" className="text-gray-400 hover:text-red-500 transition-colors">
                 <Twitter className="w-5 h-5" />
               </Link>
-              <Link href="" className="text-gray-400 hover:text-red-500 transition-colors">
+              <Link href="https://www.instagram.com/themapleepoch" className="text-gray-400 hover:text-red-500 transition-colors">
                 <Instagram className="w-5 h-5" />
               </Link>
-              <Link href="#" className="text-gray-400 hover:text-red-500 transition-colors">
+              <Link href="https://www.youtube.com/@mapleepoch" className="text-gray-400 hover:text-red-500 transition-colors">
                 <Youtube className="w-5 h-5" />
               </Link>
               <Link href="https://tiktok.me/mapleepoch" className="text-gray-400 hover:text-red-500 transition-colors">
