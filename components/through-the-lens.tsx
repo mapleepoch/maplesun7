@@ -32,7 +32,8 @@ export const ThroughTheLens: React.FC<ThroughTheLensProps> = ({ articles }) => {
             Capturing the World's Beauty
           </h3>
           <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Capture Canada and the world through your lens with expert photography tips, local secrets, and seasonal guides. Perfect for those looking to see, shoot, and share the beauty around them.
+            Capture Canada and the world through your lens with expert photography tips, local secrets, and seasonal 
+            guides. Perfect for those looking to see, shoot, and share the beauty around them.
 
           </p>
         </div>

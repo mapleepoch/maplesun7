@@ -39,8 +39,9 @@ export default async function TheFridayPostPage() {
             <div className="text-center">
               <h1 className="text-4xl md:text-6xl font-bold mb-4">The Friday Post</h1>
               <p className="text-xl opacity-90 max-w-2xl mx-auto">
-                Dive deep into Canadian stories with our weekly podcast series. Authentic conversations, 
-                expert interviews, and compelling narratives that showcase the Canadian experience.
+               Not just news. Not just talk. Every Friday, The Friday Post podcast delivers real voices, raw stories, and 
+               perspectives that cross borders.
+
               </p>
             </div>
           </div>

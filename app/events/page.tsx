@@ -39,7 +39,7 @@ export default async function EventsPage() {
             <div className="text-center">
               <h1 className="text-4xl md:text-6xl font-bold mb-4">Events</h1>
               <p className="text-xl opacity-90 max-w-2xl mx-auto">
-                Discover festivals, conferences, and cultural events happening across Canada. 
+                Discover festivals, conferences, and cultural events happening across the World. 
                 From coast to coast celebrations that showcase our nation's vibrant spirit.
               </p>
             </div>

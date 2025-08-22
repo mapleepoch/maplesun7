@@ -40,7 +40,8 @@ export default async function DailyMaplePage() {
               <h1 className="text-4xl md:text-6xl font-bold mb-4">Daily Maple</h1>
               <p className="text-xl opacity-90 max-w-2xl mx-auto">
                 Your daily dose of Canadian news and insights. Start your day with the most 
-                important Canadian stories, from coast to coast to coast.
+                important Canadian stories, from coast to coast and beyond.
+
               </p>
             </div>
           </div>

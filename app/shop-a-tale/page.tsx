@@ -94,7 +94,7 @@ export default function ShopATalePage() {
               <h1 className="text-4xl md:text-6xl font-bold mb-4">Shop a Tale</h1>
               <p className="text-xl opacity-90 max-w-2xl mx-auto">
                 Discover books and literary merchandise curated by our editorial team. 
-                Support Canadian authors and find your next great read.
+                Support authors and find your next great read.
               </p>
             </div>
           </div>

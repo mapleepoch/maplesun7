@@ -39,8 +39,8 @@ export default async function BookNookPage() {
             <div className="text-center">
               <h1 className="text-4xl md:text-6xl font-bold mb-4">BookNook</h1>
               <p className="text-xl opacity-90 max-w-2xl mx-auto">
-                Discover your next great read with our curated book reviews, author interviews, 
-                and literary insights from Canadian and international authors.
+               Discover the tales and pages that move you — Canada and beyond
+
               </p>
             </div>
           </div>

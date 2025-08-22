@@ -40,7 +40,7 @@ export default async function ResourcesPage() {
               <h1 className="text-4xl md:text-6xl font-bold mb-4">Resources</h1>
               <p className="text-xl opacity-90 max-w-2xl mx-auto">
                 Comprehensive resources covering World history, culture, and travel. 
-                Essential guides and references for understanding Canada's rich heritage.
+                Essential guides and references for understanding the Global rich heritage.
               </p>
             </div>
           </div>

@@ -39,8 +39,10 @@ export default async function MapleVoicesPage() {
             <div className="text-center">
               <h1 className="text-4xl md:text-6xl font-bold mb-4">Maple Voices</h1>
               <p className="text-xl opacity-90 max-w-2xl mx-auto">
-                Authentic voices sharing Canadian experiences across travel, food, culture, history, 
-                achievements, and arts. Real stories from real Canadians.
+                Authentic stories and perspectives from Canada and beyond — exploring culture, 
+                achievements, arts, and the experiences that shape lives. Real voices, real stories.
+
+
               </p>
             </div>
           </div>

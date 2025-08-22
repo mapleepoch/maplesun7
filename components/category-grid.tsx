@@ -122,14 +122,6 @@ const categories = [
     gradient: "from-violet-500 to-purple-500"
   },
   {
-    id: 21,
-    title: "Continent",
-    description: "Canada's global impact and North American spotlight",
-    icon: Globe2,
-    href: "/continent",
-    gradient: "from-emerald-500 to-teal-500"
-  },
-  {
     id: 5,
     title: "You May Have Missed",
     description: "Important stories you might have overlooked",
@@ -144,14 +136,6 @@ const categories = [
     icon: ShoppingBag,
     href: "/shop-a-tale",
     gradient: "from-red-600 to-red-700"
-  },
-  {
-    id: 7,
-    title: "The Friday Post",
-    description: "Podcasts showcasing Canadian experiences",
-    icon: Zap,
-    href: "/the-friday-post",
-    gradient: "from-red-500 to-red-600"
   },
   {
     id: 8,
