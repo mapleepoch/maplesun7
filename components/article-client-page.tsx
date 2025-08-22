@@ -232,7 +232,7 @@ export function ArticleClientPage({ article, latestHeadlines = [] }: ArticleClie
                     <div className="space-y-4">
                       {latestHeadlines.map((headline) => (
                         <div key={headline.id} className="group">
-                          <Link href={`/article/${headline.id}`} className="block">
+                          <Link href={`/article/${headline.slug}`} className="block">
                             <div className="aspect-video relative mb-2 rounded-lg overflow-hidden">
                               <img 
                                 src={headline.image} 
@@ -244,7 +244,9 @@ export function ArticleClientPage({ article, latestHeadlines = [] }: ArticleClie
                               {headline.category}
                             </Badge>
                             <h4 className="font-medium text-sm text-gray-900 dark:text-white group-hover:text-red-600 transition-colors line-clamp-2 mb-1">
-                              {headline.title}
+                              <Link href={`/article/${headline.slug}`}>
+                                {headline.title}
+                              </Link>
                             </h4>
                             <p className="text-xs text-gray-600 dark:text-gray-400">
                               {headline.author} • {headline.readTime}

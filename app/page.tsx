@@ -16,6 +16,7 @@ import { WorldNews } from '@/components/world-news';
 import { BookNook } from '@/components/booknook';
 import { TheFridayPost } from '@/components/the-friday-post';
 import { Footer } from '@/components/footer';
+import { Continent } from '@/components/continent';
 import { 
   getLatestHeadlines,
   getEditorsPicks,

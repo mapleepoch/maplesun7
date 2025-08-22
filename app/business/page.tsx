@@ -82,7 +82,7 @@ export default async function BusinessPage() {
                 
                 <div className="p-6">
                   <h3 className="font-bold text-lg mb-3 text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors line-clamp-2">
-                    <Link href={`/article/${article.id}`}>
+                    <Link href={`/article/${article.slug}`}>
                       {article.title}
                     </Link>
                   </h3>
@@ -112,7 +112,7 @@ export default async function BusinessPage() {
                     variant="outline"
                     className="w-full border-blue-200 text-blue-600 hover:bg-blue-50 hover:border-blue-300 dark:border-blue-800 dark:text-blue-400 dark:hover:bg-blue-950"
                   >
-                    <Link href={`/article/${article.id}`}>
+                    <Link href={`/article/${article.slug}`}>
                       Read Full Story
                     </Link>
                   </Button>

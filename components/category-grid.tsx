@@ -118,7 +118,7 @@ const categories = [
     title: "The Friday Post",
     description: "Podcasts showcasing Canadian experiences",
     icon: Headphones,
-    href: "/friday-post",
+    href: "/the-friday-post",
     gradient: "from-violet-500 to-purple-500"
   },
   {

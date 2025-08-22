@@ -79,7 +79,7 @@ export default async function UKPage() {
                   
                   <div className="p-6">
                     <h3 className="font-bold text-lg mb-3 text-gray-900 dark:text-white group-hover:text-indigo-600 transition-colors line-clamp-2">
-                      <Link href={`/article/${article.id}`}>
+                      <Link href={`/article/${article.slug}`}>
                         {article.title}
                       </Link>
                     </h3>
@@ -109,7 +109,7 @@ export default async function UKPage() {
                       variant="outline"
                       className="w-full border-indigo-200 text-indigo-600 hover:bg-indigo-50 hover:border-indigo-300 dark:border-indigo-800 dark:text-indigo-400 dark:hover:bg-indigo-950"
                     >
-                      <Link href={`/article/${article.id}`}>
+                      <Link href={`/article/${article.slug}`}>
                         Read Full Story
                       </Link>
                     </Button>

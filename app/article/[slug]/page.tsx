@@ -1,67 +1,46 @@
 import { ArticleClientPage } from '@/components/article-client-page';
-import { getPost, transformPost, getPosts, TransformedPost, fallbackPosts, getLatestHeadlines } from '@/lib/wordpress';
+import { getPostBySlug, transformPost, getPosts, TransformedPost, fallbackPosts, getLatestHeadlines } from '@/lib/wordpress';
 import { notFound } from 'next/navigation';
 
-// Generate static params for a reasonable number of articles
+// Generate static params for permalinks
 export async function generateStaticParams() {
   try {
     // Get recent posts from WordPress
     const posts = await getPosts({ per_page: 100 });
     const wordpressParams = posts.map((post) => ({
-      id: post.id.toString(),
+      slug: post.slug,
     }));
 
-    // Add fallback post IDs to ensure they're always available
+    // Add fallback post slugs to ensure they're always available
     const fallbackParams = fallbackPosts.map((post) => ({
-      id: post.id.toString(),
-    }));
-
-    // Generate a comprehensive range of IDs to cover all possible articles
-    // This ensures we cover articles with various ID ranges
-    const additionalParams = Array.from({ length: 200 }, (_, i) => ({
-      id: (i + 1).toString(),
-    }));
-
-    // Add specific high-number IDs that might be used by WordPress
-    const highIdParams = Array.from({ length: 100 }, (_, i) => ({
-      id: (i + 50).toString(),
-    }));
-
-    // Add even higher IDs to cover WordPress auto-increment gaps
-    const veryHighIdParams = Array.from({ length: 50 }, (_, i) => ({
-      id: (i + 200).toString(),
+      slug: post.slug,
     }));
 
     // Combine all params and remove duplicates
-    const allParams = [...wordpressParams, ...fallbackParams, ...additionalParams, ...highIdParams, ...veryHighIdParams];
+    const allParams = [...wordpressParams, ...fallbackParams];
     const uniqueParams = allParams.filter((param, index, self) => 
-      index === self.findIndex(p => p.id === param.id)
+      index === self.findIndex(p => p.slug === param.slug)
     );
 
     return uniqueParams;
   } catch (error) {
     console.error('Error generating static params:', error);
-    // Return a comprehensive fallback set of IDs covering a wide range
-    return Array.from({ length: 300 }, (_, i) => ({ id: (i + 1).toString() }));
+    // Return fallback slugs
+    return fallbackPosts.map((post) => ({ slug: post.slug }));
   }
 }
 
 interface ArticlePageProps {
   params: {
-    id: string;
+    slug: string;
   };
 }
 
-async function getArticleData(id: string): Promise<TransformedPost | null> {
+async function getArticleData(slug: string): Promise<TransformedPost | null> {
   try {
-    const postId = parseInt(id);
-    if (isNaN(postId)) {
-      return null;
-    }
-
-    // First try to get from WordPress
+    // First try to get from WordPress by slug
     try {
-      const post = await getPost(postId);
+      const post = await getPostBySlug(slug);
       if (post && post.id) {
         const transformed = transformPost(post);
         if (transformed) {
@@ -69,24 +48,24 @@ async function getArticleData(id: string): Promise<TransformedPost | null> {
         }
       }
     } catch (wpError) {
-      console.log(`WordPress post ${id} not found, checking fallbacks...`);
+      console.log(`WordPress post with slug "${slug}" not found, checking fallbacks...`);
     }
 
     // If not found in WordPress, check fallback posts
-    const fallbackPost = fallbackPosts.find(post => post.id === postId);
+    const fallbackPost = fallbackPosts.find(post => post.slug === slug);
     if (fallbackPost) {
       return fallbackPost;
     }
 
     // If still not found, create a dynamic fallback article
-    return createDynamicFallbackArticle(postId);
+    return createDynamicFallbackArticle(slug);
   } catch (error) {
-    console.error(`Error fetching article ${id}:`, error);
-    return createDynamicFallbackArticle(parseInt(id));
+    console.error(`Error fetching article with slug "${slug}":`, error);
+    return createDynamicFallbackArticle(slug);
   }
 }
 
-function createDynamicFallbackArticle(id: number): TransformedPost {
+function createDynamicFallbackArticle(slug: string): TransformedPost {
   const categories = ['Politics', 'Business', 'Technology', 'Health', 'Sports', 'Entertainment'];
   const authors = ['Sarah Mitchell', 'Michael Chen', 'Dr. Amanda Rodriguez', 'David Park', 'Emma Thompson', 'Robert Wilson'];
   const images = [
@@ -98,13 +77,22 @@ function createDynamicFallbackArticle(id: number): TransformedPost {
     'https://images.pexels.com/photos/2990644/pexels-photo-2990644.jpeg?auto=compress&cs=tinysrgb&w=400'
   ];
 
-  const category = categories[id % categories.length];
-  const author = authors[id % authors.length];
-  const image = images[id % images.length];
+  // Generate consistent data based on slug
+  const slugHash = slug.split('').reduce((a, b) => a + b.charCodeAt(0), 0);
+  const category = categories[slugHash % categories.length];
+  const author = authors[slugHash % authors.length];
+  const image = images[slugHash % images.length];
+  const id = Math.abs(slugHash % 10000) + 1000; // Generate ID from slug
+
+  // Create title from slug
+  const title = slug
+    .split('-')
+    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .join(' ');
 
   return {
     id,
-    title: `Breaking News Article ${id}: Important Developments in ${category}`,
+    title: `${title}: Important Developments in ${category}`,
     excerpt: `This is a comprehensive analysis of recent developments in ${category.toLowerCase()}. Our expert reporters have gathered the latest information to bring you this important story that affects our community and beyond.`,
     content: `
       <p>This is a detailed news article covering important developments in ${category.toLowerCase()}. Our newsroom has been following this story closely and can now provide you with comprehensive coverage.</p>
@@ -142,7 +130,7 @@ function createDynamicFallbackArticle(id: number): TransformedPost {
     readTime: `${Math.floor(Math.random() * 5) + 4} min read`,
     views: `${(Math.random() * 10 + 1).toFixed(1)}k views`,
     publishDate: new Date().toISOString(),
-    slug: `article-${id}`,
+    slug,
     tags: [category.toLowerCase(), 'news', 'breaking', 'analysis'],
     featured: Math.random() > 0.7,
     isTrending: Math.random() > 0.8,
@@ -151,7 +139,7 @@ function createDynamicFallbackArticle(id: number): TransformedPost {
 }
 
 export default async function ArticlePage({ params }: ArticlePageProps) {
-  const article = await getArticleData(params.id);
+  const article = await getArticleData(params.slug);
   
   if (!article) {
     notFound();
@@ -165,6 +153,7 @@ export default async function ArticlePage({ params }: ArticlePageProps) {
     console.error('Error fetching latest headlines for sidebar:', error);
     latestHeadlines = [];
   }
+
   // Transform the article to match the expected format for ArticleClientPage
   const articleData = {
     id: article.id,

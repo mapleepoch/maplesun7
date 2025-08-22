@@ -82,7 +82,7 @@ export default async function HealthPage() {
                 
                 <div className="p-6">
                   <h3 className="font-bold text-lg mb-3 text-gray-900 dark:text-white group-hover:text-green-600 transition-colors line-clamp-2">
-                    <Link href={`/article/${article.id}`}>
+                    <Link href={`/article/${article.slug}`}>
                       {article.title}
                     </Link>
                   </h3>
@@ -112,7 +112,7 @@ export default async function HealthPage() {
                     variant="outline"
                     className="w-full border-green-200 text-green-600 hover:bg-green-50 hover:border-green-300 dark:border-green-800 dark:text-green-400 dark:hover:bg-green-950"
                   >
-                    <Link href={`/article/${article.id}`}>
+                    <Link href={`/article/${article.slug}`}>
                       Read Full Story
                     </Link>
                   </Button>

@@ -108,13 +108,13 @@ const socialLinks = [
   {
     name: "Instagram",
     icon: Instagram,
-    href: "#",
+    href: "https://www.instagram.com/themapleepoch",
     color: "hover:text-pink-600"
   },
   {
     name: "YouTube",
     icon: Youtube,
-    href: "#",
+    href: "https://www.youtube.com/@mapleepoch",
     color: "hover:text-red-600"
   },
   {
