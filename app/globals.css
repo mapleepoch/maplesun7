@@ -164,6 +164,7 @@ html {
 .dark ::-webkit-scrollbar-thumb:hover {
   background: #ef4444;
 }
+
 /* WordPress Content Styling */
 .wordpress-content {
   @apply text-gray-700 dark:text-gray-300 leading-relaxed;
@@ -232,7 +233,120 @@ html {
 }
 
 .wordpress-content img {
-  @apply rounded-lg shadow-md my-6 max-w-full h-auto;
+  @apply rounded-lg shadow-md my-6;
+  max-width: 100% !important;
+  height: auto !important;
+  width: auto !important;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Enhanced styling for articles with fewer than 5 images */
+.wordpress-single-image-style img {
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  min-height: 300px !important;
+  object-fit: cover !important;
+  border-radius: 12px !important;
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+  margin: 2rem auto !important;
+  display: block !important;
+}
+
+/* Responsive adjustments for single image style */
+@media (max-width: 768px) {
+  .wordpress-single-image-style img {
+    min-height: 200px !important;
+    margin: 1.5rem auto !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .wordpress-single-image-style img {
+    min-height: 400px !important;
+    margin: 2.5rem auto !important;
+  }
+}
+/* ✅ Removed the extra closing brace here */
+
+/* Responsive image captions */
+.wordpress-content figcaption,
+.wordpress-content .wp-caption-text {
+  @apply text-sm text-gray-600 dark:text-gray-400 text-center mt-2 px-4;
+  max-width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+
+/* WordPress image containers */
+.wordpress-content figure,
+.wordpress-content .wp-caption {
+  max-width: 100% !important;
+  width: auto !important;
+  margin: 1.5rem auto !important;
+  text-align: center;
+}
+
+/* Enhanced figure styling for single image articles */
+.wordpress-single-image-style figure,
+.wordpress-single-image-style .wp-caption {
+  max-width: 100% !important;
+  width: 100% !important;
+  margin: 2rem auto !important;
+  text-align: center;
+}
+
+.wordpress-single-image-style figcaption,
+.wordpress-single-image-style .wp-caption-text {
+  @apply text-base text-gray-700 dark:text-gray-300 text-center mt-4 px-6 font-medium;
+  max-width: 100%;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
+}
+/* Responsive YouTube iframes */
+.wordpress-content iframe[src*="youtube.com"],
+.wordpress-content iframe[src*="youtu.be"] {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  aspect-ratio: 16 / 9 !important;
+  height: auto !important;
+  margin: 1.5rem auto !important;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+}
+
+/* Responsive video containers */
+.wordpress-content .wp-video,
+.wordpress-content .video-container {
+  max-width: 100% !important;
+  width: 100% !important;
+  margin: 1.5rem auto !important;
+}
+
+.wordpress-content .wp-video video {
+  width: 100% !important;
+  height: auto !important;
+  max-width: 100% !important;
+}
+
+/* Mobile-specific adjustments */
+@media (max-width: 768px) {
+  .wordpress-content img {
+    margin: 1rem auto !important;
+  }
+  
+  .wordpress-content iframe[src*="youtube.com"],
+  .wordpress-content iframe[src*="youtu.be"] {
+    margin: 1rem auto !important;
+  }
+  
+  .wordpress-content figcaption,
+  .wordpress-content .wp-caption-text {
+    @apply px-2 text-xs;
+  }
 }
 
 .wordpress-content pre {
@@ -254,6 +368,97 @@ html {
 
 .wordpress-content th {
   @apply bg-gray-100 dark:bg-gray-800 font-bold;
+}
+
+/* Gallery Grid Styles */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.gallery-grid .gallery-item {
+  position: relative;
+  overflow: hidden;
+  border-radius: 0.75rem;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.gallery-grid .gallery-item:hover {
+  transform: scale(1.02);
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15);
+}
+
+.gallery-grid .gallery-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.gallery-grid .gallery-item:hover img {
+  transform: scale(1.05);
+}
+
+/* Responsive grid adjustments */
+@media (max-width: 1024px) {
+  .gallery-grid {
+    display: block;
+  }
+  
+  .gallery-grid .gallery-item {
+    margin-bottom: 1.5rem;
+  }
+}
+
+/* Lightbox styles */
+.lightbox-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.95);
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+
+.lightbox-content {
+  position: relative;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.lightbox-image {
+  max-width: 100%;
+  max-height: 80vh;
+  object-fit: contain;
+  border-radius: 0.5rem;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+.lightbox-caption {
+  margin-top: 1rem;
+  color: white;
+  text-align: center;
+  font-size: 1.125rem;
+  line-height: 1.75;
+  max-width: 600px;
+}
+
+.lightbox-counter {
+  margin-top: 1rem;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.875rem;
 }
 
 /* Error page styles */

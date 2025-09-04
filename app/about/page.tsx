@@ -4,6 +4,27 @@ import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Users, Award, Globe, Heart, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+import { Metadata } from 'next';
+
+export const metadata: Metadata = {
+  title: 'About Us - The Maple Epoch',
+  description: 'Learn about The Maple Epoch, our mission, values, and commitment to delivering accurate, unbiased, and comprehensive news coverage.',
+  alternates: {
+    canonical: 'https://www.mapleepoch.com/about',
+  },
+  openGraph: {
+    title: 'About Us - The Maple Epoch',
+    description: 'Learn about The Maple Epoch, our mission, values, and commitment to delivering accurate, unbiased, and comprehensive news coverage.',
+    url: 'https://www.mapleepoch.com/about',
+    siteName: 'The Maple Epoch',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'About Us - The Maple Epoch',
+    description: 'Learn about The Maple Epoch, our mission, values, and commitment to delivering accurate, unbiased, and comprehensive news coverage.',
+  },
+};
 
 const teamMembers = [
   {

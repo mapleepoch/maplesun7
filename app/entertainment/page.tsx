@@ -5,6 +5,22 @@ import { Button } from '@/components/ui/button';
 import { Clock, Eye, User, TrendingUp, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { getPostsByCategory, transformPost, fallbackPosts } from '@/lib/wordpress';
+import { getCategoryYoastSEO, yoastToNextMetadata } from '@/lib/yoast-seo';
+import { Metadata } from 'next';
+
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const yoastData = await getCategoryYoastSEO('entertainment');
+    return yoastToNextMetadata(
+      yoastData,
+      'Entertainment - The Maple Epoch',
+      'Discover the latest in movies, music, celebrity news, arts, culture, and entertainment from around the world.'
+    );
+  } catch (error) {
+    console.error('Error generating entertainment metadata:', error);
+    return yoastToNextMetadata(null, 'Entertainment - The Maple Epoch', 'Discover the latest in movies, music, celebrity news, arts, culture, and entertainment from around the world.');
+  }
+}
 
 async function getEntertainmentData() {
   try {
@@ -82,7 +98,7 @@ export default async function EntertainmentPage() {
                 
                 <div className="p-6">
                   <h3 className="font-bold text-lg mb-3 text-gray-900 dark:text-white group-hover:text-pink-600 transition-colors line-clamp-2">
-                    <Link href={`/article/${article.slug}`}>
+                    <Link href={`/${article.slug}`}>
                       {article.title}
                     </Link>
                   </h3>
@@ -112,7 +128,7 @@ export default async function EntertainmentPage() {
                     variant="outline"
                     className="w-full border-pink-200 text-pink-600 hover:bg-pink-50 hover:border-pink-300 dark:border-pink-800 dark:text-pink-400 dark:hover:bg-pink-950"
                   >
-                    <Link href={`/article/${article.slug}`}>
+                    <Link href={`/${article.slug}`}>
                       Read Full Story
                     </Link>
                   </Button>

@@ -1,6 +1,7 @@
 import { ArticleClientPage } from '@/components/article-client-page';
 import { getPostBySlug, transformPost, getPosts, TransformedPost, fallbackPosts, getLatestHeadlines } from '@/lib/wordpress';
 import { notFound } from 'next/navigation';
+import { processContentForGallery, validateImages } from '@/lib/image-parser';
 
 // Generate static params for permalinks
 export async function generateStaticParams() {

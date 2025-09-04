@@ -3,6 +3,7 @@ import { Footer } from '@/components/footer';
 import { WorldNews } from '@/components/world-news';
 import { ChevronRight } from 'lucide-react';
 import Link from 'next/link';
+import { Metadata } from 'next';
 import { 
   getAfricaNews,
   getAmericasNews,
@@ -12,6 +13,26 @@ import {
   getUKNews,
   getCanadaNews
 } from '@/lib/wordpress';
+
+export const metadata: Metadata = {
+  title: 'World News - The Maple Epoch',
+  description: 'Stay informed with global news from every continent. Breaking stories, international developments, and regional insights from around the world.',
+  alternates: {
+    canonical: 'https://www.mapleepoch.com/world',
+  },
+  openGraph: {
+    title: 'World News - The Maple Epoch',
+    description: 'Stay informed with global news from every continent. Breaking stories, international developments, and regional insights from around the world.',
+    url: 'https://www.mapleepoch.com/world',
+    siteName: 'The Maple Epoch',
+    type: 'website',
+  },
+  twitter: {
+    card: 'summary_large_image',
+    title: 'World News - The Maple Epoch',
+    description: 'Stay informed with global news from every continent. Breaking stories, international developments, and regional insights from around the world.',
+  },
+};
 
 async function getWorldData() {
   try {

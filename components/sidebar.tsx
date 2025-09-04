@@ -123,7 +123,7 @@ export function Sidebar() {
         <div className="space-y-4">
           {mostReadArticles.map((article) => (
             <div key={article.id} className="group pb-4 border-b border-gray-200 dark:border-gray-700 last:border-b-0 last:pb-0">
-              <Link href={`/article/${article.id}`} className="block">
+              <Link href={`/${article.slug || article.id}`} className="block">
                 <h4 className="text-sm font-medium text-gray-900 dark:text-white group-hover:text-red-600 transition-colors line-clamp-2 mb-2">
                   {article.title}
                 </h4>

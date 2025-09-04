@@ -117,7 +117,7 @@ export function TrendingTopics() {
                 variant="outline"
                 className="w-full border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-950 group"
               >
-                <Link href={`/topic/${topic.topic.replace('#', '').toLowerCase()}`} className="flex items-center justify-center space-x-2">
+                <Link href={`/${topic.topic.replace('#', '').toLowerCase()}`} className="flex items-center justify-center space-x-2">
                   <span>Explore Topic</span>
                   <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </Link>

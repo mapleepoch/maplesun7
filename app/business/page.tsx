@@ -5,6 +5,22 @@ import { Button } from '@/components/ui/button';
 import { Clock, Eye, User, TrendingUp, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { getPostsByCategory, transformPost, fallbackPosts } from '@/lib/wordpress';
+import { getCategoryYoastSEO, yoastToNextMetadata } from '@/lib/yoast-seo';
+import { Metadata } from 'next';
+
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const yoastData = await getCategoryYoastSEO('business');
+    return yoastToNextMetadata(
+      yoastData,
+      'Business - The Maple Epoch',
+      'Get the latest business news, market insights, economic analysis, and corporate developments from around the globe.'
+    );
+  } catch (error) {
+    console.error('Error generating business metadata:', error);
+    return yoastToNextMetadata(null, 'Business - The Maple Epoch', 'Get the latest business news, market insights, economic analysis, and corporate developments from around the globe.');
+  }
+}
 
 async function getBusinessData() {
   try {
@@ -82,7 +98,7 @@ export default async function BusinessPage() {
                 
                 <div className="p-6">
                   <h3 className="font-bold text-lg mb-3 text-gray-900 dark:text-white group-hover:text-blue-600 transition-colors line-clamp-2">
-                    <Link href={`/article/${article.slug}`}>
+                    <Link href={`/${article.slug}`}>
                       {article.title}
                     </Link>
                   </h3>
@@ -112,7 +128,7 @@ export default async function BusinessPage() {
                     variant="outline"
                     className="w-full border-blue-200 text-blue-600 hover:bg-blue-50 hover:border-blue-300 dark:border-blue-800 dark:text-blue-400 dark:hover:bg-blue-950"
                   >
-                    <Link href={`/article/${article.slug}`}>
+                    <Link href={`/${article.slug}`}>
                       Read Full Story
                     </Link>
                   </Button>

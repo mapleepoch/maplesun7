@@ -5,6 +5,22 @@ import { Button } from '@/components/ui/button';
 import { Clock, Eye, User, TrendingUp, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { getPostsByCategory, transformPost, fallbackPosts } from '@/lib/wordpress';
+import { getCategoryYoastSEO, yoastToNextMetadata } from '@/lib/yoast-seo';
+import { Metadata } from 'next';
+
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const yoastData = await getCategoryYoastSEO('health');
+    return yoastToNextMetadata(
+      yoastData,
+      'Health - The Maple Epoch',
+      'Stay informed about health news, medical breakthroughs, wellness tips, and healthcare developments that matter to you.'
+    );
+  } catch (error) {
+    console.error('Error generating health metadata:', error);
+    return yoastToNextMetadata(null, 'Health - The Maple Epoch', 'Stay informed about health news, medical breakthroughs, wellness tips, and healthcare developments that matter to you.');
+  }
+}
 
 async function getHealthData() {
   try {
@@ -82,7 +98,7 @@ export default async function HealthPage() {
                 
                 <div className="p-6">
                   <h3 className="font-bold text-lg mb-3 text-gray-900 dark:text-white group-hover:text-green-600 transition-colors line-clamp-2">
-                    <Link href={`/article/${article.slug}`}>
+                    <Link href={`/${article.slug}`}>
                       {article.title}
                     </Link>
                   </h3>
@@ -112,7 +128,7 @@ export default async function HealthPage() {
                     variant="outline"
                     className="w-full border-green-200 text-green-600 hover:bg-green-50 hover:border-green-300 dark:border-green-800 dark:text-green-400 dark:hover:bg-green-950"
                   >
-                    <Link href={`/article/${article.slug}`}>
+                    <Link href={`/${article.slug}`}>
                       Read Full Story
                     </Link>
                   </Button>

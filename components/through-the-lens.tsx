@@ -72,7 +72,7 @@ export const ThroughTheLens: React.FC<ThroughTheLensProps> = ({ articles }) => {
               
               <div className="p-6">
                 <h3 className="font-bold text-lg mb-3 text-gray-900 dark:text-white group-hover:text-red-600 transition-colors line-clamp-2">
-                  <Link href={`/article/${article.slug}`}>
+                  <Link href={`/${article.slug}`}>
                     {article.title}
                   </Link>
                 </h3>
@@ -102,7 +102,7 @@ export const ThroughTheLens: React.FC<ThroughTheLensProps> = ({ articles }) => {
                   variant="outline"
                   className="w-full border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-950"
                 >
-                  <Link href={`/article/${article.slug}`}>
+                  <Link href={`/${article.slug}`}>
                     View Photography Guide
                   </Link>
                 </Button>

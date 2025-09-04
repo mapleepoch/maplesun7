@@ -5,6 +5,22 @@ import { Button } from '@/components/ui/button';
 import { Clock, Eye, User, TrendingUp, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { getLifestyle, fallbackPosts } from '@/lib/wordpress';
+import { getCategoryYoastSEO, yoastToNextMetadata } from '@/lib/yoast-seo';
+import { Metadata } from 'next';
+
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const yoastData = await getCategoryYoastSEO('lifestyle');
+    return yoastToNextMetadata(
+      yoastData,
+      'Lifestyle - The Maple Epoch',
+      'Discover the latest trends in lifestyle, wellness, fashion, food, and culture. Your guide to living well and staying inspired.'
+    );
+  } catch (error) {
+    console.error('Error generating lifestyle metadata:', error);
+    return yoastToNextMetadata(null, 'Lifestyle - The Maple Epoch', 'Discover the latest trends in lifestyle, wellness, fashion, food, and culture. Your guide to living well and staying inspired.');
+  }
+}
 
 async function getLifestyleData() {
   try {
@@ -82,7 +98,7 @@ export default async function LifestylePage() {
                 
                 <div className="p-6">
                   <h3 className="font-bold text-lg mb-3 text-gray-900 dark:text-white group-hover:text-pink-600 transition-colors line-clamp-2">
-                    <Link href={`/article/${article.slug}`}>
+                    <Link href={`/${article.slug}`}>
                       {article.title}
                     </Link>
                   </h3>
@@ -112,7 +128,7 @@ export default async function LifestylePage() {
                     variant="outline"
                     className="w-full border-pink-200 text-pink-600 hover:bg-pink-50 hover:border-pink-300 dark:border-pink-800 dark:text-pink-400 dark:hover:bg-pink-950"
                   >
-                    <Link href={`/article/${article.slug}`}>
+                    <Link href={`/${article.slug}`}>
                       Read Full Story
                     </Link>
                   </Button>

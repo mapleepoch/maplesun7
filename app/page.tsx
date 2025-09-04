@@ -43,10 +43,27 @@ import {
   getCanadaNews,
   TransformedPost
 } from '@/lib/wordpress';
+import { getHomepageYoastSEO, yoastToNextMetadata } from '@/lib/yoast-seo';
+import { Metadata } from 'next';
 
 // Force dynamic rendering - no caching
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
+
+// Generate metadata using Yoast SEO
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const yoastData = await getHomepageYoastSEO();
+    return yoastToNextMetadata(
+      yoastData,
+      'The Maple Epoch - Breaking News & Latest Updates',
+      'Stay informed with real-time coverage of breaking news, politics, business, technology, health, sports, and entertainment.'
+    );
+  } catch (error) {
+    console.error('Error generating homepage metadata:', error);
+    return yoastToNextMetadata(null);
+  }
+}
 
 async function getHomePageData() {
   try {

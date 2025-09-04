@@ -5,6 +5,22 @@ import { Button } from '@/components/ui/button';
 import { Clock, Eye, User, TrendingUp, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { getPostsByCategory, transformPost, fallbackPosts } from '@/lib/wordpress';
+import { getCategoryYoastSEO, yoastToNextMetadata } from '@/lib/yoast-seo';
+import { Metadata } from 'next';
+
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const yoastData = await getCategoryYoastSEO('politics');
+    return yoastToNextMetadata(
+      yoastData,
+      'Politics - The Maple Epoch',
+      'Stay informed with the latest political developments, government policies, and electoral news from around the world.'
+    );
+  } catch (error) {
+    console.error('Error generating politics metadata:', error);
+    return yoastToNextMetadata(null, 'Politics - The Maple Epoch', 'Stay informed with the latest political developments, government policies, and electoral news from around the world.');
+  }
+}
 
 async function getPoliticsData() {
   try {
@@ -82,7 +98,7 @@ export default async function PoliticsPage() {
                 
                 <div className="p-6">
                   <h3 className="font-bold text-lg mb-3 text-gray-900 dark:text-white group-hover:text-red-600 transition-colors line-clamp-2">
-                    <Link href={`/article/${article.slug}`}>
+                    <Link href={`/${article.slug}`}>
                       {article.title}
                     </Link>
                   </h3>
@@ -112,7 +128,7 @@ export default async function PoliticsPage() {
                     variant="outline"
                     className="w-full border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-950"
                   >
-                    <Link href={`/article/${article.slug}`}>
+                    <Link href={`/${article.slug}`}>
                       Read Full Story
                     </Link>
                   </Button>

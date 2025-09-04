@@ -24,6 +24,8 @@ import {
 } from 'lucide-react';
 import { TransformedPost } from '@/lib/wordpress';
 import { CommentsSection } from '@/components/comments-section';
+import { ArticleGallery } from '@/components/article-gallery';
+import { processContentForGallery, validateImages } from '@/lib/image-parser';
 
 interface ArticleClientPageProps {
   article: any;
@@ -33,6 +35,22 @@ interface ArticleClientPageProps {
 export function ArticleClientPage({ article, latestHeadlines = [] }: ArticleClientPageProps) {
   const [isLiked, setIsLiked] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [processedContent, setProcessedContent] = useState({
+    images: [],
+    cleanContent: '',
+    useGallery: false
+  });
+
+  useEffect(() => {
+    if (article?.content) {
+      const processed = processContentForGallery(article.content);
+      setProcessedContent({
+        images: validateImages(processed.images),
+        cleanContent: processed.cleanContent,
+        useGallery: processed.useGallery
+      });
+    }
+  }, [article?.content]);
 
   if (!article) {
     return (
@@ -85,7 +103,7 @@ export function ArticleClientPage({ article, latestHeadlines = [] }: ArticleClie
                   <img 
                     src={article.image} 
                     alt={article.title}
-                    className="w-full h-64 md:h-80 object-cover"
+                    className="w-full h-64 md:h-96 lg:h-[28rem] object-cover"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
                   <div className="absolute bottom-6 left-6 right-6">
@@ -131,8 +149,15 @@ export function ArticleClientPage({ article, latestHeadlines = [] }: ArticleClie
 
                 {/* Article Content */}
                 <div className="p-6">
+                  {/* Gallery Section - Only for articles with 5+ images */}
+                  {processedContent.useGallery && processedContent.images.length > 0 && (
+                    <div className="mb-8">
+                      <ArticleGallery images={processedContent.images} />
+                    </div>
+                  )}
+                  
                   <div 
-                    className="wordpress-content prose prose-lg max-w-none dark:prose-invert 
+                    className={`wordpress-content ${!processedContent.useGallery ? 'wordpress-single-image-style' : ''} prose prose-lg max-w-none dark:prose-invert 
                       prose-headings:text-gray-900 dark:prose-headings:text-white 
                       prose-a:text-red-600 hover:prose-a:text-red-700
                       prose-strong:text-gray-900 dark:prose-strong:text-white
@@ -141,8 +166,10 @@ export function ArticleClientPage({ article, latestHeadlines = [] }: ArticleClie
                       prose-ul:text-gray-700 dark:prose-ul:text-gray-300
                       prose-ol:text-gray-700 dark:prose-ol:text-gray-300
                       prose-blockquote:text-gray-600 dark:prose-blockquote:text-gray-400
-                      prose-blockquote:border-red-500"
-                    dangerouslySetInnerHTML={{ __html: article.content }}
+                      prose-blockquote:border-red-500`}
+                    dangerouslySetInnerHTML={{ 
+                      __html: processedContent.useGallery ? processedContent.cleanContent : article.content 
+                    }}
                   />
                 </div>
 
@@ -244,7 +271,7 @@ export function ArticleClientPage({ article, latestHeadlines = [] }: ArticleClie
                               {headline.category}
                             </Badge>
                             <h4 className="font-medium text-sm text-gray-900 dark:text-white group-hover:text-red-600 transition-colors line-clamp-2 mb-1">
-                              <Link href={`/article/${headline.slug}`}>
+                              <Link href={`/${headline.slug}`}>
                                 {headline.title}
                               </Link>
                             </h4>

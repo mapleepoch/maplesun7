@@ -5,6 +5,22 @@ import { Button } from '@/components/ui/button';
 import { Clock, Eye, User, TrendingUp, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { getPostsByCategory, transformPost, fallbackPosts } from '@/lib/wordpress';
+import { getCategoryYoastSEO, yoastToNextMetadata } from '@/lib/yoast-seo';
+import { Metadata } from 'next';
+
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const yoastData = await getCategoryYoastSEO('sports');
+    return yoastToNextMetadata(
+      yoastData,
+      'Sports - The Maple Epoch',
+      'Get the latest sports news, game results, player updates, and athletic achievements from around the world.'
+    );
+  } catch (error) {
+    console.error('Error generating sports metadata:', error);
+    return yoastToNextMetadata(null, 'Sports - The Maple Epoch', 'Get the latest sports news, game results, player updates, and athletic achievements from around the world.');
+  }
+}
 
 async function getSportsData() {
   try {
@@ -82,7 +98,7 @@ export default async function SportsPage() {
                 
                 <div className="p-6">
                   <h3 className="font-bold text-lg mb-3 text-gray-900 dark:text-white group-hover:text-orange-600 transition-colors line-clamp-2">
-                    <Link href={`/article/${article.slug}`}>
+                    <Link href={`/${article.slug}`}>
                       {article.title}
                     </Link>
                   </h3>
@@ -112,7 +128,7 @@ export default async function SportsPage() {
                     variant="outline"
                     className="w-full border-orange-200 text-orange-600 hover:bg-orange-50 hover:border-orange-300 dark:border-orange-800 dark:text-orange-400 dark:hover:bg-orange-950"
                   >
-                    <Link href={`/article/${article.slug}`}>
+                    <Link href={`/${article.slug}`}>
                       Read Full Story
                     </Link>
                   </Button>

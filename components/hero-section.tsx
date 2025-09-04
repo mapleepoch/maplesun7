@@ -192,7 +192,7 @@ export function HeroSection({ articles }: HeroSectionProps) {
                       <span className="flex items-center gap-1"><Eye className="w-4 h-4" />{mainArticle.views}</span>
                     </div>
                     <Button asChild className="bg-red-600 hover:bg-red-700 text-white px-3 py-1">
-                      <Link href={`/article/${mainArticle.slug}`}>Read More</Link>
+                      <Link href={`/${mainArticle.slug}`}>Read More</Link>
                     </Button>
                   </div>
                 </div>
@@ -212,7 +212,7 @@ export function HeroSection({ articles }: HeroSectionProps) {
                   </div>
                   <div className="p-4">
                     <h3 className="font-semibold text-lg text-gray-900 dark:text-white line-clamp-2 hover:text-red-600">
-                      <Link href={`/article/${article.slug}`}>{article.title}</Link>
+                      <Link href={`/${article.slug}`}>{article.title}</Link>
                     </h3>
                     <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 mb-2">{article.excerpt}</p>
                     <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
@@ -244,7 +244,7 @@ export function HeroSection({ articles }: HeroSectionProps) {
                 </div>
                 <div className="p-4">
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white hover:text-red-600 line-clamp-2">
-                    <Link href={`/article/${businessArticle.slug}`}>
+                    <Link href={`/${businessArticle.slug}`}>
                       {businessArticle.title || 'Business News Update'}
                     </Link>
                   </h3>
@@ -274,7 +274,7 @@ export function HeroSection({ articles }: HeroSectionProps) {
                 </div>
                 <div className="p-4">
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white hover:text-red-600 line-clamp-2">
-                    <Link href={`/article/${trendingBusinessArticle.slug}`}>
+                    <Link href={`/${trendingBusinessArticle.slug}`}>
                       {trendingBusinessArticle.title || 'Trending Business Story'}
                     </Link>
                   </h3>

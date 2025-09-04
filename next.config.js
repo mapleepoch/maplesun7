@@ -8,11 +8,40 @@ const nextConfig = {
   },
   images: { 
     unoptimized: true,
-    domains: ['mapleepoch.com', 'images.pexels.com'],
+    domains: ['mapleepoch.com', 'api.mapleepoch.com', 'api.www.mapleepoch.com', 'www.mapleepoch.com', 'images.pexels.com'],
   },
   trailingSlash: true,
   experimental: {
     forceSwcTransforms: true,
+  },
+  async rewrites() {
+    return [
+      {
+        source: '/:slug',
+        destination: '/article/:slug',
+        has: [
+          {
+            type: 'header',
+            key: 'accept',
+            value: '(?!.*text/html).*', // Only rewrite for non-HTML requests or when slug doesn't match existing pages
+          },
+        ],
+      },
+    ];
+  },
+  async redirects() {
+    return [
+      {
+        source: '/article/:slug',
+        destination: '/:slug',
+        permanent: true,
+      },
+      {
+        source: '/news/:slug',
+        destination: '/:slug',
+        permanent: true,
+      },
+    ];
   },
   // Disable static optimization for dynamic content
   output: 'standalone',

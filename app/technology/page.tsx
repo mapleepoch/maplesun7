@@ -5,6 +5,22 @@ import { Button } from '@/components/ui/button';
 import { Clock, Eye, User, TrendingUp, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
 import { getPostsByCategory, transformPost, fallbackPosts } from '@/lib/wordpress';
+import { getCategoryYoastSEO, yoastToNextMetadata } from '@/lib/yoast-seo';
+import { Metadata } from 'next';
+
+export async function generateMetadata(): Promise<Metadata> {
+  try {
+    const yoastData = await getCategoryYoastSEO('technology');
+    return yoastToNextMetadata(
+      yoastData,
+      'Technology - The Maple Epoch',
+      'Discover the latest tech innovations, digital trends, AI breakthroughs, and technological developments shaping our future.'
+    );
+  } catch (error) {
+    console.error('Error generating technology metadata:', error);
+    return yoastToNextMetadata(null, 'Technology - The Maple Epoch', 'Discover the latest tech innovations, digital trends, AI breakthroughs, and technological developments shaping our future.');
+  }
+}
 
 async function getTechnologyData() {
   try {
@@ -82,7 +98,7 @@ export default async function TechnologyPage() {
                 
                 <div className="p-6">
                   <h3 className="font-bold text-lg mb-3 text-gray-900 dark:text-white group-hover:text-purple-600 transition-colors line-clamp-2">
-                    <Link href={`/article/${article.slug}`}>
+                    <Link href={`/${article.slug}`}>
                       {article.title}
                     </Link>
                   </h3>
@@ -112,7 +128,7 @@ export default async function TechnologyPage() {
                     variant="outline"
                     className="w-full border-purple-200 text-purple-600 hover:bg-purple-50 hover:border-purple-300 dark:border-purple-800 dark:text-purple-400 dark:hover:bg-purple-950"
                   >
-                    <Link href={`/article/${article.slug}`}>
+                    <Link href={`/${article.slug}`}>
                       Read Full Story
                     </Link>
                   </Button>
