@@ -57,11 +57,11 @@ export function Header() {
     if (searchQuery.trim()) {
       try {
         router.push(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+        setSearchQuery('');
+        setIsSearchOpen(false);
       } catch (error) {
         console.error('Navigation error:', error);
       }
-      setSearchQuery('');
-      setIsSearchOpen(false);
     }
   };
 

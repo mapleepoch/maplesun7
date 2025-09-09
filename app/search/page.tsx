@@ -9,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Clock, Eye, User, Search, ChevronRight } from 'lucide-react';
 import Link from 'next/link';
-import { fallbackPosts, TransformedPost, getPosts, transformPost } from '@/lib/wordpress';
+import { TransformedPost } from '@/lib/wordpress';
 
 function SearchResults() {
   const searchParams = useSearchParams();
@@ -17,6 +17,8 @@ function SearchResults() {
   const [searchQuery, setSearchQuery] = useState(query);
   const [searchResults, setSearchResults] = useState<TransformedPost[]>([]);
   const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const [totalResults, setTotalResults] = useState(0);
 
   useEffect(() => {
     if (query) {
@@ -26,48 +28,34 @@ function SearchResults() {
 
   const performSearch = async (searchTerm: string) => {
     setIsLoading(true);
+    setError(null);
     
     try {
-      // First try to search WordPress posts
-      let wordpressPosts = [];
-      try {
-        wordpressPosts = await getPosts({ 
-          search: searchTerm, 
-          per_page: 20,
-          _embed: true 
-        });
-      } catch (wpError) {
-        console.error('WordPress search error:', wpError);
-        wordpressPosts = [];
+      console.log('Performing search for:', searchTerm);
+      
+      // Call our API route for search
+      const response = await fetch(`/api/search?q=${encodeURIComponent(searchTerm)}&per_page=20`);
+      
+      if (!response.ok) {
+        throw new Error(`Search request failed: ${response.status} ${response.statusText}`);
       }
       
-      let results: TransformedPost[] = [];
+      const data = await response.json();
       
-      if (wordpressPosts.length > 0) {
-        results = wordpressPosts.map(transformPost).filter(Boolean);
-      } else {
-        // Fallback to searching through fallback posts
-        results = fallbackPosts.filter(post => 
-          post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          post.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          post.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
-          post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
-        );
+      console.log('Search API response:', data);
+      
+      if (data.error) {
+        throw new Error(data.error);
       }
       
-      setSearchResults(results);
+      setSearchResults(data.posts || []);
+      setTotalResults(data.total || 0);
+      
     } catch (error) {
       console.error('Search error:', error);
-      // Fallback to searching through fallback posts
-      const results = fallbackPosts.filter(post => 
-        post.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.excerpt.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        post.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()))
-      );
-      setSearchResults(results);
+      setError(error instanceof Error ? error.message : 'Search failed');
+      setSearchResults([]);
+      setTotalResults(0);
     } finally {
       setIsLoading(false);
     }
@@ -125,15 +113,33 @@ function SearchResults() {
               <p className="mt-4 text-gray-600 dark:text-gray-300">
                 {isLoading ? (
                   "Searching..."
+                ) : error ? (
+                  <span className="text-red-600">Error: {error}</span>
                 ) : (
-                  `Found ${searchResults.length} result${searchResults.length !== 1 ? 's' : ''} for "${query}"`
+                  `Found ${totalResults} result${totalResults !== 1 ? 's' : ''} for "${query}"`
                 )}
               </p>
             )}
           </div>
 
           {/* Search Results */}
-          {isLoading ? (
+          {error ? (
+            <div className="text-center py-16">
+              <Search className="w-16 h-16 text-red-300 dark:text-red-600 mx-auto mb-4" />
+              <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
+                Search Error
+              </h2>
+              <p className="text-red-600 dark:text-red-400 mb-8">
+                {error}
+              </p>
+              <Button onClick={() => {
+                setError(null);
+                if (query) performSearch(query);
+              }}>
+                Try Again
+              </Button>
+            </div>
+          ) : isLoading ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
               {[1, 2, 3, 4, 5, 6].map((i) => (
                 <div key={i} className="animate-pulse">

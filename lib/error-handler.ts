@@ -46,10 +46,18 @@ export function safeAsync<T>(
   asyncFn: () => Promise<T>,
   fallback: T
 ): Promise<T> {
-  return asyncFn().catch((error) => {
-    console.error('Async operation failed:', error);
-    return fallback;
-  });
+  return asyncFn()
+    .then((result) => {
+      // Log successful operations for debugging
+      if (process.env.NODE_ENV === 'development') {
+        console.log('Async operation succeeded');
+      }
+      return result;
+    })
+    .catch((error) => {
+      console.error('Async operation failed:', error);
+      return fallback;
+    });
 }
 
 export function withErrorBoundary<T extends any[]>(

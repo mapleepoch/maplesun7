@@ -1,6 +1,6 @@
 import { safeAsync, withErrorBoundary } from './error-handler';
 
-const API_URL = process.env.WORDPRESS_API_URL || process.env.NEXT_PUBLIC_WORDPRESS_API_URL || 'https://mapleepoch.com/wp-json/wp/v2';
+const API_URL = process.env.WORDPRESS_API_URL || process.env.NEXT_PUBLIC_WORDPRESS_API_URL || 'https://api.mapleepoch.com/wp-json/wp/v2';
 
 export interface WordPressPost {
   id: number;
@@ -135,6 +135,8 @@ async function fetchWithCache(url: string, options?: RequestInit) {
   // }
 
   try {
+    console.log('Fetching WordPress API:', url);
+    
     const response = await fetch(url, {
       ...options,
       headers: {
@@ -147,17 +149,22 @@ async function fetchWithCache(url: string, options?: RequestInit) {
       cache: 'no-store', // Disable Next.js caching
     });
 
+    console.log('WordPress API response status:', response.status, response.statusText);
+
     if (!response.ok) {
-      console.warn(`HTTP error! status: ${response.status} for URL: ${url}`);
+      const errorText = await response.text();
+      console.error(`HTTP error! status: ${response.status} for URL: ${url}`, errorText);
       return [];
     }
 
     const data = await response.json();
+    console.log('WordPress API data received:', Array.isArray(data) ? `${data.length} items` : typeof data);
+    
     // Don't cache for real-time data
     // cache.set(cacheKey, { data, timestamp: Date.now() });
     return data;
   } catch (error) {
-    console.error('WordPress API fetch error:', error);
+    console.error('WordPress API fetch error for URL:', url, error);
     return [];
   }
 }
@@ -176,7 +183,14 @@ export async function getPosts(params: {
   if (params.per_page) searchParams.append('per_page', params.per_page.toString());
   if (params.page) searchParams.append('page', params.page.toString());
   if (params.categories) searchParams.append('categories', params.categories);
-  if (params.search) searchParams.append('search', params.search);
+  if (params.search) {
+    // Ensure search term is properly encoded and not empty
+    const searchTerm = params.search.trim();
+    if (searchTerm) {
+      searchParams.append('search', searchTerm);
+      console.log('Adding search parameter:', searchTerm);
+    }
+  }
   if (params._embed !== false) searchParams.append('_embed', 'true');
   if (params.sticky) searchParams.append('sticky', 'true');
   // Only fetch published posts by default
@@ -187,6 +201,8 @@ export async function getPosts(params: {
   searchParams.append('order', 'desc');
 
   const url = `${API_URL}/posts?${searchParams.toString()}`;
+  console.log('Final WordPress API URL:', url);
+  
   return safeAsync(() => fetchWithCache(url), []);
 }
 

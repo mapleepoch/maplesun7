@@ -43,6 +43,20 @@ const nextConfig = {
       },
     ];
   },
+  // Add API route configuration
+  async headers() {
+    return [
+      {
+        source: '/api/:path*',
+        headers: [
+          {
+            key: 'Cache-Control',
+            value: 'no-cache, no-store, must-revalidate',
+          },
+        ],
+      },
+    ];
+  },
   // Disable static optimization for dynamic content
   output: 'standalone',
   // Ensure all dynamic routes are handled properly
