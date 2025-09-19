@@ -43,7 +43,8 @@ export default function robots(): MetadataRoute.Robots {
     ],
     sitemap: [
       'https://www.mapleepoch.com/sitemap.xml',
-      'https://www.mapleepoch.com/sitemap-news.xml'
+      'https://www.mapleepoch.com/sitemap-news.xml',
+      'https://www.mapleepoch.com/sitemap-categories.xml'
     ],
     host: 'https://www.mapleepoch.com'
   };

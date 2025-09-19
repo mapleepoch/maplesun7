@@ -1,6 +1,7 @@
 import { MetadataRoute } from 'next';
 
 const API_URL = 'https://api.www.mapleepoch.com/wp-json/wp/v2';
+const API_URL_MAIN = 'https://api.mapleepoch.com/wp-json/wp/v2';
 const FRONTEND_URL = 'https://www.mapleepoch.com';
 
 interface WordPressPost {
@@ -27,7 +28,7 @@ async function getRecentPosts(): Promise<WordPressPost[]> {
   while (hasMorePosts && recentPosts.length < 100) { // Google News limit is 100 articles
     try {
       const response = await fetch(
-        `${API_URL}/posts?after=${fortyEightHoursAgo}&_fields=slug,title,date&per_page=100&page=${page}&status=publish&orderby=date&order=desc`,
+        `${API_URL_MAIN}/posts?after=${fortyEightHoursAgo}&_fields=slug,title,date&per_page=100&page=${page}&status=publish&orderby=date&order=desc`,
         {
           headers: {
             'Content-Type': 'application/json',
@@ -105,7 +106,7 @@ ${posts.map((post) => {
   const publishDate = new Date(post.date).toISOString();
   
   return `  <url>
-    <loc>${FRONTEND_URL}/${post.slug}</loc>
+    <loc>${FRONTEND_URL}/article/${post.slug}</loc>
     <news:news>
       <news:publication>
         <news:name>The Maple Epoch</news:name>
