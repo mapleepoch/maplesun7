@@ -26,8 +26,7 @@ async function getAllPosts(): Promise<WordPressPost[]> {
           headers: {
             'Content-Type': 'application/json',
           },
-          // Disable caching for sitemap generation
-          cache: 'no-store',
+          next: { revalidate: 3600 }, // Cache for 1 hour
         }
       );
 
@@ -142,7 +141,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     
     // Map posts to sitemap entries
     const postEntries: MetadataRoute.Sitemap = posts.map((post) => ({
-      url: `${FRONTEND_URL}/${post.slug}`,
+      url: `${FRONTEND_URL}/article/${post.slug}`,
       lastModified: post.modified,
       changeFrequency: 'weekly' as const,
       priority: 0.7,

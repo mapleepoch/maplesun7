@@ -147,7 +147,6 @@ export default function EditPostPage() {
           <main className="pt-32">
             <div className="container mx-auto px-4 py-8">
               <div className="text-center">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto"></div>
                 <p className="mt-4 text-gray-600 dark:text-gray-300">Loading post...</p>
               </div>
             </div>

@@ -28,69 +28,48 @@ interface SeoHeadProps {
 }
 
 /**
- * Rewrites URLs from API domain to frontend domain
- */
-function rewriteUrl(url: string): string {
-  if (!url) return url;
-  return url.replace(/https?:\/\/api\.mapleepoch\.com/g, 'https://www.mapleepoch.com');
-}
-
-/**
  * SEO Head component that renders Yoast metadata into Next.js head
  * This component is used for rendering meta tags from WordPress Yoast SEO
  */
 export default function SeoHead({ yoast }: SeoHeadProps) {
   if (!yoast) return null;
 
-  // Rewrite URLs from API domain to frontend domain
-  const rewrittenYoast = {
-    ...yoast,
-    canonical: rewriteUrl(yoast.canonical || ''),
-    og_url: rewriteUrl(yoast.og_url || ''),
-    og_image: yoast.og_image ? (
-      Array.isArray(yoast.og_image) 
-        ? yoast.og_image.map(img => ({ ...img, url: rewriteUrl(img.url) }))
-        : rewriteUrl(yoast.og_image)
-    ) : undefined,
-    twitter_image: rewriteUrl(yoast.twitter_image || ''),
-  };
-
   return (
     <>
       {/* Basic SEO */}
-      {rewrittenYoast.title && <title>{rewrittenYoast.title}</title>}
-      {rewrittenYoast.description && (
-        <meta name="description" content={rewrittenYoast.description} />
+      {yoast.title && <title>{yoast.title}</title>}
+      {yoast.description && (
+        <meta name="description" content={yoast.description} />
       )}
-      {rewrittenYoast.canonical && (
-        <link rel="canonical" href={rewrittenYoast.canonical} />
+      {yoast.canonical && (
+        <link rel="canonical" href={yoast.canonical} />
       )}
 
       {/* Open Graph */}
-      {rewrittenYoast.og_title && (
-        <meta property="og:title" content={rewrittenYoast.og_title} />
+      {yoast.og_title && (
+        <meta property="og:title" content={yoast.og_title} />
       )}
-      {rewrittenYoast.og_description && (
-        <meta property="og:description" content={rewrittenYoast.og_description} />
+      {yoast.og_description && (
+        <meta property="og:description" content={yoast.og_description} />
       )}
-      {rewrittenYoast.og_type && (
-        <meta property="og:type" content={rewrittenYoast.og_type} />
+      {yoast.og_type && (
+        <meta property="og:type" content={yoast.og_type} />
       )}
-      {rewrittenYoast.og_url && (
-        <meta property="og:url" content={rewrittenYoast.og_url} />
+      {yoast.og_url && (
+        <meta property="og:url" content={yoast.og_url} />
       )}
-      {rewrittenYoast.og_site_name && (
-        <meta property="og:site_name" content={rewrittenYoast.og_site_name} />
+      {yoast.og_site_name && (
+        <meta property="og:site_name" content={yoast.og_site_name} />
       )}
-      {rewrittenYoast.og_locale && (
-        <meta property="og:locale" content={rewrittenYoast.og_locale} />
+      {yoast.og_locale && (
+        <meta property="og:locale" content={yoast.og_locale} />
       )}
       
       {/* Open Graph Images */}
-      {rewrittenYoast.og_image && (
+      {yoast.og_image && (
         <>
-          {Array.isArray(rewrittenYoast.og_image) ? (
-            rewrittenYoast.og_image.map((img, index) => (
+          {Array.isArray(yoast.og_image) ? (
+            yoast.og_image.map((img, index) => (
               <React.Fragment key={index}>
                 <meta property="og:image" content={img.url} />
                 {img.width && <meta property="og:image:width" content={img.width.toString()} />}
@@ -99,36 +78,31 @@ export default function SeoHead({ yoast }: SeoHeadProps) {
               </React.Fragment>
             ))
           ) : (
-            <meta property="og:image" content={rewrittenYoast.og_image} />
+            <meta property="og:image" content={yoast.og_image} />
           )}
         </>
       )}
 
       {/* Twitter Card */}
-      {rewrittenYoast.twitter_card && (
-        <meta name="twitter:card" content={rewrittenYoast.twitter_card} />
+      {yoast.twitter_card && (
+        <meta name="twitter:card" content={yoast.twitter_card} />
       )}
-      {rewrittenYoast.twitter_title && (
-        <meta name="twitter:title" content={rewrittenYoast.twitter_title} />
+      {yoast.twitter_title && (
+        <meta name="twitter:title" content={yoast.twitter_title} />
       )}
-      {rewrittenYoast.twitter_description && (
-        <meta name="twitter:description" content={rewrittenYoast.twitter_description} />
+      {yoast.twitter_description && (
+        <meta name="twitter:description" content={yoast.twitter_description} />
       )}
-      {rewrittenYoast.twitter_image && (
-        <meta name="twitter:image" content={rewrittenYoast.twitter_image} />
+      {yoast.twitter_image && (
+        <meta name="twitter:image" content={yoast.twitter_image} />
       )}
 
       {/* Schema.org JSON-LD */}
-      {rewrittenYoast.schema && (
+      {yoast.schema && (
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
-            __html: JSON.stringify(
-              JSON.parse(JSON.stringify(rewrittenYoast.schema).replace(
-                /https?:\/\/api\.mapleepoch\.com/g,
-                'https://www.mapleepoch.com'
-              ))
-            )
+            __html: JSON.stringify(yoast.schema)
           }}
         />
       )}

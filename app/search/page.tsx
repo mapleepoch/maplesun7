@@ -140,15 +140,8 @@ function SearchResults() {
               </Button>
             </div>
           ) : isLoading ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[1, 2, 3, 4, 5, 6].map((i) => (
-                <div key={i} className="animate-pulse">
-                  <div className="aspect-video bg-gray-200 dark:bg-gray-700 rounded-xl mb-4"></div>
-                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded mb-2"></div>
-                  <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4 mb-2"></div>
-                  <div className="h-3 bg-gray-200 dark:bg-gray-700 rounded w-1/2"></div>
-                </div>
-              ))}
+            <div className="text-center py-8">
+              <p className="text-gray-600 dark:text-gray-300">Searching...</p>
             </div>
           ) : searchResults.length > 0 ? (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -174,7 +167,7 @@ function SearchResults() {
                   
                   <div className="p-6">
                     <h3 className="font-bold text-lg mb-3 text-gray-900 dark:text-white group-hover:text-red-600 transition-colors line-clamp-2">
-                      <Link href={`/${article.slug}`}>
+                      <Link href={`/article/${article.slug}`}>
                         {article.title}
                       </Link>
                     </h3>
@@ -204,7 +197,7 @@ function SearchResults() {
                       variant="outline"
                       className="w-full border-red-200 text-red-600 hover:bg-red-50 hover:border-red-300 dark:border-red-800 dark:text-red-400 dark:hover:bg-red-950"
                     >
-                      <Link href={`/${article.slug}`}>
+                      <Link href={`/article/${article.slug}`}>
                         Read Full Story
                       </Link>
                     </Button>
@@ -256,20 +249,7 @@ function SearchResults() {
 
 export default function SearchPage() {
   return (
-    <Suspense fallback={
-      <div className="min-h-screen bg-white dark:bg-gray-900">
-        <Header />
-        <main className="pt-32">
-          <div className="container mx-auto px-4 py-8">
-            <div className="text-center">
-              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto"></div>
-              <p className="mt-4 text-gray-600 dark:text-gray-300">Loading search...</p>
-            </div>
-          </div>
-        </main>
-        <Footer />
-      </div>
-    }>
+    <Suspense fallback={null}>
       <SearchResults />
     </Suspense>
   );

@@ -67,41 +67,7 @@ export function Header() {
 
   // Prevent rendering until mounted to avoid hydration issues
   if (!mounted) {
-    return (
-      <header className="fixed top-0 w-full z-50 bg-white/95 dark:bg-gray-900/95 backdrop-blur-sm border-b border-gray-200 dark:border-gray-800">
-        <div className="bg-red-600 text-white py-2 px-4">
-          <div className="flex items-center space-x-4">
-            <Badge variant="destructive" className="bg-red-800 hover:bg-red-800">
-              LOADING
-            </Badge>
-            <div className="flex-1">
-              <div className="whitespace-nowrap">Loading news...</div>
-            </div>
-          </div>
-        </div>
-        <nav className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <Link href="/" className="text-xl font-bold text-red-600">
-              <div className="flex items-center space-x-2">
-                <Leaf className="w-5 h-5" />
-                <span>The Maple Epoch</span>
-              </div>
-            </Link>
-            <div className="flex items-center space-x-4">
-              <Button variant="ghost" size="icon" className="text-gray-700 dark:text-gray-300">
-                <Search className="w-5 h-5" />
-              </Button>
-              <Button variant="ghost" size="icon" className="text-gray-700 dark:text-gray-300">
-                <Sun className="w-5 h-5" />
-              </Button>
-              <Button variant="ghost" size="icon" className="lg:hidden text-gray-700 dark:text-gray-300">
-                <Menu className="w-5 h-5" />
-              </Button>
-            </div>
-          </div>
-        </nav>
-      </header>
-    );
+    return null;
   }
 
   return (

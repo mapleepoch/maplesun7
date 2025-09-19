@@ -79,7 +79,7 @@ export default async function AustraliaPage() {
                   
                   <div className="p-6">
                     <h3 className="font-bold text-lg mb-3 text-gray-900 dark:text-white group-hover:text-orange-600 transition-colors line-clamp-2">
-                      <Link href={`/${article.slug}`}>
+                      <Link href={`/article/${article.slug}`}>
                         {article.title}
                       </Link>
                     </h3>
@@ -109,7 +109,7 @@ export default async function AustraliaPage() {
                       variant="outline"
                       className="w-full border-orange-200 text-orange-600 hover:bg-orange-50 hover:border-orange-300 dark:border-orange-800 dark:text-orange-400 dark:hover:bg-orange-950"
                     >
-                      <Link href={`/${article.slug}`}>
+                      <Link href={`/article/${article.slug}`}>
                         Read Full Story
                       </Link>
                     </Button>

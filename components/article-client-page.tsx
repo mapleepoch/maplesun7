@@ -271,7 +271,7 @@ export function ArticleClientPage({ article, latestHeadlines = [] }: ArticleClie
                               {headline.category}
                             </Badge>
                             <h4 className="font-medium text-sm text-gray-900 dark:text-white group-hover:text-red-600 transition-colors line-clamp-2 mb-1">
-                              <Link href={`/${headline.slug}`}>
+                              <Link href={`/article/${headline.slug}`}>
                                 {headline.title}
                               </Link>
                             </h4>

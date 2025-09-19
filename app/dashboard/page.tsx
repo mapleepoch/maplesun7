@@ -171,8 +171,7 @@ export default function DashboardPage() {
 
               {isLoading ? (
                 <div className="p-8 text-center">
-                  <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto"></div>
-                  <p className="mt-4 text-gray-600 dark:text-gray-300">Loading posts...</p>
+                  <p className="text-gray-600 dark:text-gray-300">Loading posts...</p>
                 </div>
               ) : posts.length === 0 ? (
                 <div className="p-8 text-center">

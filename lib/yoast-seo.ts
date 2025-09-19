@@ -27,14 +27,6 @@ interface YoastSEOResponse {
 }
 
 /**
- * Rewrites URLs from API domain to frontend domain
- */
-function rewriteUrl(url: string): string {
-  if (!url) return url;
-  return url.replace(/https?:\/\/api\.mapleepoch\.com/g, FRONTEND_URL);
-}
-
-/**
  * Fetches Yoast SEO data for the homepage
  */
 export async function getHomepageYoastSEO(): Promise<YoastSEOResponse | null> {
@@ -129,23 +121,19 @@ export function yoastToNextMetadata(yoast: YoastSEOResponse | null, fallbackTitl
     };
   }
 
-  // Rewrite URLs
-  const canonical = rewriteUrl(yoast.canonical || '');
-  const ogUrl = rewriteUrl(yoast.og_url || canonical);
-  
   // Handle Open Graph images
   let ogImages: Array<{ url: string; width?: number; height?: number; alt?: string }> = [];
   if (yoast.og_image) {
     if (Array.isArray(yoast.og_image)) {
       ogImages = yoast.og_image.map(img => ({
-        url: rewriteUrl(img.url),
+        url: img.url,
         width: img.width || 1200,
         height: img.height || 630,
         alt: img.alt || yoast.title || '',
       }));
     } else if (typeof yoast.og_image === 'string') {
       ogImages = [{
-        url: rewriteUrl(yoast.og_image),
+        url: yoast.og_image,
         width: 1200,
         height: 630,
         alt: yoast.title || '',
@@ -156,7 +144,7 @@ export function yoastToNextMetadata(yoast: YoastSEOResponse | null, fallbackTitl
   // Handle Twitter images
   let twitterImages: string[] = [];
   if (yoast.twitter_image) {
-    twitterImages = [rewriteUrl(yoast.twitter_image)];
+    twitterImages = [yoast.twitter_image];
   } else if (ogImages.length > 0) {
     twitterImages = [ogImages[0].url];
   }
@@ -165,12 +153,12 @@ export function yoastToNextMetadata(yoast: YoastSEOResponse | null, fallbackTitl
     title: yoast.title || fallbackTitle || 'The Maple Epoch',
     description: yoast.description || fallbackDescription || 'Breaking news and latest updates',
     alternates: {
-      canonical: canonical || undefined,
+      canonical: yoast.canonical || undefined,
     },
     openGraph: {
       title: yoast.og_title || yoast.title || fallbackTitle || 'The Maple Epoch',
       description: yoast.og_description || yoast.description || fallbackDescription || 'Breaking news and latest updates',
-      url: ogUrl || undefined,
+      url: yoast.og_url || undefined,
       siteName: yoast.og_site_name || 'The Maple Epoch',
       images: ogImages,
       locale: yoast.og_locale || 'en_US',
@@ -191,7 +179,7 @@ export function yoastToNextMetadata(yoast: YoastSEOResponse | null, fallbackTitl
 export function generateFallbackMetadata(title?: string, description?: string, slug?: string): Metadata {
   const pageTitle = title || 'The Maple Epoch - Breaking News & Latest Updates';
   const pageDescription = description || 'Stay informed with real-time coverage of breaking news, politics, business, technology, health, sports, and entertainment.';
-  const pageUrl = slug ? `${FRONTEND_URL}/${slug}` : FRONTEND_URL;
+  const pageUrl = slug ? `${FRONTEND_URL}/article/${slug}` : FRONTEND_URL;
   
   return {
     title: pageTitle,

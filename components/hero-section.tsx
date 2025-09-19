@@ -112,15 +112,8 @@ export function HeroSection({ articles }: HeroSectionProps) {
   });
 
   if (displayArticles.length === 0) {
-    return (
-      <section className="pt-32 pb-16">
-        <div className="container mx-auto px-4 text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto mb-4"></div>
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Loading Latest News...</h2>
-          <p className="text-gray-600 dark:text-gray-300">Fetching articles from WordPress...</p>
-        </div>
-      </section>
-    );
+    // Return empty section instead of loading state
+    return null;
   }
 
   const finalArticles = displayArticles.slice(0, 9);
@@ -129,15 +122,8 @@ export function HeroSection({ articles }: HeroSectionProps) {
   const bottomArticles = finalArticles.slice(4, 9);
 
   if (!mainArticle) {
-    return (
-      <section className="pt-32 pb-16">
-        <div className="container mx-auto px-4 text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-red-600 mx-auto mb-4"></div>
-          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">Loading Latest News...</h2>
-          <p className="text-gray-600 dark:text-gray-300">Preparing content...</p>
-        </div>
-      </section>
-    );
+    // Return empty section instead of loading state
+    return null;
   }
 
   return (
@@ -192,7 +178,7 @@ export function HeroSection({ articles }: HeroSectionProps) {
                       <span className="flex items-center gap-1"><Eye className="w-4 h-4" />{mainArticle.views}</span>
                     </div>
                     <Button asChild className="bg-red-600 hover:bg-red-700 text-white px-3 py-1">
-                      <Link href={`/${mainArticle.slug}`}>Read More</Link>
+                      <Link href={`/article/${mainArticle.slug}`}>Read More</Link>
                     </Button>
                   </div>
                 </div>
@@ -212,7 +198,7 @@ export function HeroSection({ articles }: HeroSectionProps) {
                   </div>
                   <div className="p-4">
                     <h3 className="font-semibold text-lg text-gray-900 dark:text-white line-clamp-2 hover:text-red-600">
-                      <Link href={`/${article.slug}`}>{article.title}</Link>
+                      <Link href={`/article/${article.slug}`}>{article.title}</Link>
                     </h3>
                     <p className="text-sm text-gray-600 dark:text-gray-300 line-clamp-2 mb-2">{article.excerpt}</p>
                     <div className="flex justify-between text-xs text-gray-500 dark:text-gray-400">
@@ -228,7 +214,7 @@ export function HeroSection({ articles }: HeroSectionProps) {
           {/* Side Column */}
           <div className="flex flex-col gap-6">
             {/* Business Article */}
-            {businessArticle && (
+            {/* {businessArticle && (
               <div className="group bg-white dark:bg-gray-800 rounded-xl shadow-lg overflow-hidden">
                 <div className="aspect-video relative">
                   <img 
@@ -244,7 +230,7 @@ export function HeroSection({ articles }: HeroSectionProps) {
                 </div>
                 <div className="p-4">
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white hover:text-red-600 line-clamp-2">
-                    <Link href={`/${businessArticle.slug}`}>
+                    <Link href={`/article/${businessArticle.slug}`}>
                       {businessArticle.title || 'Business News Update'}
                     </Link>
                   </h3>
@@ -253,7 +239,7 @@ export function HeroSection({ articles }: HeroSectionProps) {
                   </p>
                 </div>
               </div>
-            )}
+            )} */}
 
             {/* Trending Business (Static Card) */}
             {trendingBusinessArticle && (
@@ -274,7 +260,7 @@ export function HeroSection({ articles }: HeroSectionProps) {
                 </div>
                 <div className="p-4">
                   <h3 className="text-lg font-semibold text-gray-900 dark:text-white hover:text-red-600 line-clamp-2">
-                    <Link href={`/${trendingBusinessArticle.slug}`}>
+                    <Link href={`/article/${trendingBusinessArticle.slug}`}>
                       {trendingBusinessArticle.title || 'Trending Business Story'}
                     </Link>
                   </h3>
@@ -288,7 +274,7 @@ export function HeroSection({ articles }: HeroSectionProps) {
             {/* News Features Sidebar */}
             <NewsFeaturesSidebar />
             {/* Two Side Articles */}
-            {sideArticles.slice(0, 1).map(article => (
+            {sideArticles.slice(0, 0).map(article => (
               <div key={article.id} className="group bg-white dark:bg-gray-800 rounded-xl shadow-md overflow-hidden">
                 <div className="h-32 relative">
                   <img src={article.image} alt={article.title} className="w-full h-full object-cover group-hover:scale-110 transition-transform" />

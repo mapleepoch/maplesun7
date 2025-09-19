@@ -79,7 +79,7 @@ export default async function AfricaPage() {
                   
                   <div className="p-6">
                     <h3 className="font-bold text-lg mb-3 text-gray-900 dark:text-white group-hover:text-amber-600 transition-colors line-clamp-2">
-                      <Link href={`/${article.slug}`}>
+                      <Link href={`/article/${article.slug}`}>
                         {article.title}
                       </Link>
                     </h3>
@@ -109,7 +109,7 @@ export default async function AfricaPage() {
                       variant="outline"
                       className="w-full border-amber-200 text-amber-600 hover:bg-amber-50 hover:border-amber-300 dark:border-amber-800 dark:text-amber-400 dark:hover:bg-amber-950"
                     >
-                      <Link href={`/${article.slug}`}>
+                      <Link href={`/article/${article.slug}`}>
                         Read Full Story
                       </Link>
                     </Button>

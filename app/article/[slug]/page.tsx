@@ -1,6 +1,8 @@
 import { ArticleClientPage } from '@/components/article-client-page';
 import { getPostBySlug, transformPost, getPosts, TransformedPost, fallbackPosts, getLatestHeadlines } from '@/lib/wordpress';
+import { getPostYoastSEO, yoastToNextMetadata, generateFallbackMetadata } from '@/lib/yoast-seo';
 import { notFound } from 'next/navigation';
+import { Metadata } from 'next';
 import { processContentForGallery, validateImages } from '@/lib/image-parser';
 
 // Generate static params for permalinks
@@ -35,6 +37,33 @@ interface ArticlePageProps {
   params: {
     slug: string;
   };
+}
+
+export async function generateMetadata({ params }: ArticlePageProps): Promise<Metadata> {
+  try {
+    // First try to get Yoast SEO data directly
+    const yoastData = await getPostYoastSEO(params.slug);
+    
+    if (yoastData) {
+      return yoastToNextMetadata(yoastData);
+    }
+
+    // Fallback: try to get post data for basic metadata
+    const article = await getArticleData(params.slug);
+    
+    if (!article) {
+      return generateFallbackMetadata('Article Not Found - The Maple Epoch', 'The requested article could not be found.', params.slug);
+    }
+
+    // Generate fallback metadata from post data
+    const title = article.title || 'The Maple Epoch';
+    const description = article.excerpt || 'Breaking news and latest updates';
+    
+    return generateFallbackMetadata(title, description, params.slug);
+  } catch (error) {
+    console.error('Error generating metadata:', error);
+    return generateFallbackMetadata();
+  }
 }
 
 async function getArticleData(slug: string): Promise<TransformedPost | null> {

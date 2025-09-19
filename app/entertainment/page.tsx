@@ -98,7 +98,7 @@ export default async function EntertainmentPage() {
                 
                 <div className="p-6">
                   <h3 className="font-bold text-lg mb-3 text-gray-900 dark:text-white group-hover:text-pink-600 transition-colors line-clamp-2">
-                    <Link href={`/${article.slug}`}>
+                    <Link href={`/article/${article.slug}`}>
                       {article.title}
                     </Link>
                   </h3>
@@ -128,7 +128,7 @@ export default async function EntertainmentPage() {
                     variant="outline"
                     className="w-full border-pink-200 text-pink-600 hover:bg-pink-50 hover:border-pink-300 dark:border-pink-800 dark:text-pink-400 dark:hover:bg-pink-950"
                   >
-                    <Link href={`/${article.slug}`}>
+                    <Link href={`/article/${article.slug}`}>
                       Read Full Story
                     </Link>
                   </Button>

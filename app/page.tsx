@@ -47,8 +47,7 @@ import { getHomepageYoastSEO, yoastToNextMetadata } from '@/lib/yoast-seo';
 import { Metadata } from 'next';
 
 // Force dynamic rendering - no caching
-export const dynamic = 'force-dynamic';
-export const revalidate = 0;
+export const revalidate = 60; // Revalidate every 60 seconds
 
 // Generate metadata using Yoast SEO
 export async function generateMetadata(): Promise<Metadata> {

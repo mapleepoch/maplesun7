@@ -245,22 +245,6 @@ export default async function NewsPage({ params }: NewsPageProps) {
   }
 
   // Fetch post with Yoast schema data for injection
-  let yoastSchema = null;
-  
-  try {
-    // Get Yoast SEO data which includes schema
-    const yoastData = await getPostYoastSEO(params.slug);
-    if (yoastData?.schema) {
-      // Rewrite URLs in schema from API domain to frontend domain
-      yoastSchema = JSON.parse(JSON.stringify(yoastData.schema).replace(
-        /https?:\/\/api\.mapleepoch\.com/g,
-        FRONTEND_URL
-      ));
-    }
-  } catch (error) {
-    console.error('Error fetching Yoast schema:', error);
-  }
-
   // Fetch latest headlines for the sidebar
   let latestHeadlines: TransformedPost[] = [];
   try {
@@ -294,15 +278,6 @@ export default async function NewsPage({ params }: NewsPageProps) {
   
   return (
     <>
-      {/* Inject Yoast Schema */}
-      {yoastSchema && (
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(yoastSchema)
-          }}
-        />
-      )}
       <ArticleClientPage article={articleData} latestHeadlines={latestHeadlines} />
     </>
   );

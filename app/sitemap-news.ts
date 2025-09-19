@@ -32,8 +32,7 @@ async function getRecentPosts(): Promise<WordPressPost[]> {
           headers: {
             'Content-Type': 'application/json',
           },
-          // Disable caching for fresh news data
-          cache: 'no-store',
+          next: { revalidate: 1800 }, // Cache for 30 minutes
         }
       );
 

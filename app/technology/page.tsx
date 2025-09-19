@@ -98,7 +98,7 @@ export default async function TechnologyPage() {
                 
                 <div className="p-6">
                   <h3 className="font-bold text-lg mb-3 text-gray-900 dark:text-white group-hover:text-purple-600 transition-colors line-clamp-2">
-                    <Link href={`/${article.slug}`}>
+                    <Link href={`/article/${article.slug}`}>
                       {article.title}
                     </Link>
                   </h3>
@@ -128,7 +128,7 @@ export default async function TechnologyPage() {
                     variant="outline"
                     className="w-full border-purple-200 text-purple-600 hover:bg-purple-50 hover:border-purple-300 dark:border-purple-800 dark:text-purple-400 dark:hover:bg-purple-950"
                   >
-                    <Link href={`/${article.slug}`}>
+                    <Link href={`/article/${article.slug}`}>
                       Read Full Story
                     </Link>
                   </Button>

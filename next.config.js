@@ -7,38 +7,42 @@ const nextConfig = {
     ignoreBuildErrors: true,
   },
   images: { 
-    unoptimized: true,
     domains: ['mapleepoch.com', 'api.mapleepoch.com', 'api.www.mapleepoch.com', 'www.mapleepoch.com', 'images.pexels.com'],
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'mapleepoch.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'api.mapleepoch.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'api.www.mapleepoch.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'www.mapleepoch.com',
+      },
+      {
+        protocol: 'https',
+        hostname: 'images.pexels.com',
+      },
+    ],
+    formats: ['image/webp', 'image/avif'],
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920, 2048, 3840],
+    imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
   trailingSlash: true,
   experimental: {
     forceSwcTransforms: true,
   },
-  async rewrites() {
-    return [
-      {
-        source: '/:slug',
-        destination: '/article/:slug',
-        has: [
-          {
-            type: 'header',
-            key: 'accept',
-            value: '(?!.*text/html).*', // Only rewrite for non-HTML requests or when slug doesn't match existing pages
-          },
-        ],
-      },
-    ];
-  },
   async redirects() {
     return [
       {
-        source: '/article/:slug',
-        destination: '/:slug',
-        permanent: true,
-      },
-      {
         source: '/news/:slug',
-        destination: '/:slug',
+        destination: '/article/:slug',
         permanent: true,
       },
     ];

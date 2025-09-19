@@ -121,18 +121,16 @@ export interface TransformedPost {
 }
 
 // Cache for API responses
-// Disable caching for fresh data on every request
 const cache = new Map();
-const CACHE_DURATION = 0; // No caching for real-time data
+const CACHE_DURATION = 60 * 1000; // Cache for 1 minute
 
 async function fetchWithCache(url: string, options?: RequestInit) {
-  // Skip cache for fresh data on every request
-  // const cacheKey = url + JSON.stringify(options);
-  // const cached = cache.get(cacheKey);
+  const cacheKey = url + JSON.stringify(options);
+  const cached = cache.get(cacheKey);
   
-  // if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
-  //   return cached.data;
-  // }
+  if (cached && Date.now() - cached.timestamp < CACHE_DURATION) {
+    return cached.data;
+  }
 
   try {
     console.log('Fetching WordPress API:', url);
@@ -141,12 +139,9 @@ async function fetchWithCache(url: string, options?: RequestInit) {
       ...options,
       headers: {
         'Content-Type': 'application/json',
-        'Cache-Control': 'no-cache, no-store, must-revalidate',
-        'Pragma': 'no-cache',
-        'Expires': '0',
         ...options?.headers,
       },
-      cache: 'no-store', // Disable Next.js caching
+      next: { revalidate: 60 }, // Cache for 60 seconds
     });
 
     console.log('WordPress API response status:', response.status, response.statusText);
@@ -160,8 +155,7 @@ async function fetchWithCache(url: string, options?: RequestInit) {
     const data = await response.json();
     console.log('WordPress API data received:', Array.isArray(data) ? `${data.length} items` : typeof data);
     
-    // Don't cache for real-time data
-    // cache.set(cacheKey, { data, timestamp: Date.now() });
+    cache.set(cacheKey, { data, timestamp: Date.now() });
     return data;
   } catch (error) {
     console.error('WordPress API fetch error for URL:', url, error);
